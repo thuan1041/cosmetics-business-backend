@@ -8,4 +8,6 @@ public interface UserService {
     User findByUsername(String username);
     
     User loginUser(String username, String password);
+
+	User getUserByUsername(String username);
 }

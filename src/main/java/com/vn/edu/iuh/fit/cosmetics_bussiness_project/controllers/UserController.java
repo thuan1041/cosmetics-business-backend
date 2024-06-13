@@ -1,5 +1,6 @@
 package com.vn.edu.iuh.fit.cosmetics_bussiness_project.controllers;
 
+import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.ApiResponse;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.User;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,28 +19,35 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User registeredUser = userService.registerUser(user);
-        return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
+    @PostMapping("register")
+    public ResponseEntity<ApiResponse<User>> registerUser(@RequestBody User user){
+    	User registeredUser = userService.registerUser(user);
+    	ApiResponse<User> response = new ApiResponse<>(0, "User registered successfully", registeredUser);
+    	return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-        User user = userService.findByUsername(username);
+    public ResponseEntity<ApiResponse<User>> getUserByUsername(@PathVariable String username) {
+        User user = userService.getUserByUsername(username);
+        ApiResponse<User> response;
         if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            response = new ApiResponse<>(0, "User found", user);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            response = new ApiResponse<>(1, "User not found", null);
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<User> loginUser(@RequestBody User loginRequest) {
+    public ResponseEntity<ApiResponse<User>> loginUser(@RequestBody User loginRequest) {
         User user = userService.loginUser(loginRequest.getUsername(), loginRequest.getPassword());
+        ApiResponse<User> response;
         if (user != null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
+        	response = new ApiResponse<>(0, "Login Successfully", user);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        	response = new ApiResponse<>(1, "Login Failed", user);
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
     }
 
