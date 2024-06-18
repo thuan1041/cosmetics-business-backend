@@ -1,36 +1,22 @@
 package com.vn.edu.iuh.fit.cosmetics_bussiness_project.services;
 
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.ShoppingCartItem;
-import com.vn.edu.iuh.fit.cosmetics_bussiness_project.repositories.ShoppingCartItemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-public class ShoppingCartItemService {
+public interface ShoppingCartItemService {
 
-    private final ShoppingCartItemRepository shoppingCartItemRepository;
+    ShoppingCartItem createShoppingCartItem(ShoppingCartItem shoppingCartItem);
 
-    @Autowired
-    public ShoppingCartItemService(ShoppingCartItemRepository shoppingCartItemRepository) {
-        this.shoppingCartItemRepository = shoppingCartItemRepository;
-    }
+    List<ShoppingCartItem> getAllShoppingCartItems();
 
-    public List<ShoppingCartItem> getAllShoppingCartItems() {
-        return shoppingCartItemRepository.findAll();
-    }
+    ShoppingCartItem getShoppingCartItemById(Long id);
 
-    public Optional<ShoppingCartItem> getShoppingCartItemById(Long id) {
-        return shoppingCartItemRepository.findById(id);
-    }
+    ShoppingCartItem updateShoppingCartItem(Long id, ShoppingCartItem updatedShoppingCartItem);
 
-    public ShoppingCartItem saveShoppingCartItem(ShoppingCartItem shoppingCartItem) {
-        return shoppingCartItemRepository.save(shoppingCartItem);
-    }
+    void deleteShoppingCartItem(Long id);
 
-    public void deleteShoppingCartItem(Long id) {
-        shoppingCartItemRepository.deleteById(id);
-    }
+    List<ShoppingCartItem> getShoppingCartItemsByUsername(String username);
+
+	ShoppingCartItem createShoppingCartItem(ShoppingCartItem shoppingCartItem, Long userId);
 }

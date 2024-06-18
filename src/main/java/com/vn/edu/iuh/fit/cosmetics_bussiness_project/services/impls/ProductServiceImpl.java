@@ -23,22 +23,22 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
-    @Override
-    public Product updateProduct(Long id, Product product) {
-        Optional<Product> optionalProduct = productRepository.findById(id);
-        if (optionalProduct.isPresent()) {
-            Product existingProduct = optionalProduct.get();
-            existingProduct.setName(product.getName());
-            existingProduct.setDescription(product.getDescription());
-            existingProduct.setPrice(product.getPrice());
-            existingProduct.setCategory(product.getCategory());
-            existingProduct.setBrand(product.getBrand());
-            existingProduct.setStockQuantity(product.getStockQuantity());
-            return productRepository.save(existingProduct);
-        } else {
-            return null;
-        }
-    }
+//    @Override
+//    public Product updateProduct(Long id, Product product) {
+//        Optional<Product> optionalProduct = productRepository.findById(id);
+//        if (optionalProduct.isPresent()) {
+//            Product existingProduct = optionalProduct.get();
+//            existingProduct.setName(product.getName());
+//            existingProduct.setDescription(product.getDescription());
+//            existingProduct.setPrice(product.getPrice(id));
+//            existingProduct.setCategory(product.getCategory());
+//            existingProduct.setBrand(product.getBrand());
+//            existingProduct.setStockQuantity(product.getStockQuantity());
+//            return productRepository.save(existingProduct);
+//        } else {
+//            return null;
+//        }
+//    }
 
     @Override
     public void deleteProduct(Long id) {
@@ -58,4 +58,10 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
+	@Override
+	public Product updateProduct(Long id, Product product) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -1,6 +1,7 @@
 package com.vn.edu.iuh.fit.cosmetics_bussiness_project.models;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -42,7 +43,7 @@ public class OrderStatus {
     private Long id;
     
     private String status;
-    private LocalDateTime statusDate;
+    private Date statusDate;
     
     @ManyToOne
     @JoinColumn(name = "order_id")
@@ -64,11 +65,11 @@ public class OrderStatus {
 		this.status = status;
 	}
 
-	public LocalDateTime getStatusDate() {
+	public Date getStatusDate() {
 		return statusDate;
 	}
 
-	public void setStatusDate(LocalDateTime statusDate) {
+	public void setStatusDate(Date statusDate) {
 		this.statusDate = statusDate;
 	}
 

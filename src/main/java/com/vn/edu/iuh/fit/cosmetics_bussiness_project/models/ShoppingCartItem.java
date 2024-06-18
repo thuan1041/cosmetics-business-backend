@@ -18,11 +18,20 @@ public class ShoppingCartItem {
     @Column(name = "quantity")
     private int quantity;
     
-    @Column(name = "user_id")
+    @ManyToOne()
+    @JoinColumn(name = "customer_id")
     private User user;
 
 	public Long getId() {
 		return id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public void setId(Long id) {

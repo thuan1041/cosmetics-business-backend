@@ -9,4 +9,5 @@ public interface OrderService {
     Order createOrder(Order order);
     Order updateOrder(Long id, Order order);
     void deleteOrder(Long id);
+    List<Order> getOrdersByUsername(String username);
 }

@@ -16,75 +16,87 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
 
-    @Autowired
-    private OrderRepository orderRepository;
+	@Autowired
+	private OrderRepository orderRepository;
 
-    @Autowired
-    private OrderItemRepository orderItemRepository;
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
-    @Autowired
-    private OrderStatusRepository orderStatusRepository;
-    @Autowired
-    private ProductRepository productRepository;
+	@Autowired
+	private OrderStatusRepository orderStatusRepository;
+	@Autowired
+	private ProductRepository productRepository;
 
+//	@Override
+//	public Order createOrder(Order order) {
+//		// Save the main order information
+//		Order savedOrder = orderRepository.save(order);
+//
+//		// Save order items
+//		for (OrderItem item : order.getOrderItems()) {
+//			item.setOrder(savedOrder);
+//
+//			// Fetch the product by its ID and set it to the order item
+//			if (item.getProduct() != null && item.getProduct().getId() != null) {
+//				Product product = productRepository.findById(item.getProduct().getId()).orElseThrow(
+//						() -> new IllegalArgumentException("Product not found with id: " + item.getProduct().getId()));
+//				item.setProduct(product);
+//			}
+//
+//			orderItemRepository.save(item);
+//		}
+//		// Save initial order status
+//		OrderStatus initialStatus = new OrderStatus();
+//		initialStatus.setOrder(savedOrder);
+//		initialStatus.setStatus("CREATED");
+//		LocalDateTime currentDateTime = LocalDateTime.now();
+//		Date currentDate = java.sql.Timestamp.valueOf(currentDateTime);
+//		initialStatus.setStatusDate(currentDate);
+//		orderStatusRepository.save(initialStatus);
+//
+//		return savedOrder;
+//	}
     @Override
     public Order createOrder(Order order) {
-        // Save the main order information
-        Order savedOrder = orderRepository.save(order);
-
-        // Save order items
-        for (OrderItem item : order.getOrderItems()) {
-            item.setOrder(savedOrder);
-
-            // Fetch the product by its ID and set it to the order item
-            if (item.getProduct() != null && item.getProduct().getId() != null) {
-                Product product = productRepository.findById(item.getProduct().getId())
-                        .orElseThrow(() -> new IllegalArgumentException("Product not found with id: " + item.getProduct().getId()));
-                item.setProduct(product);
-            }
-
-            orderItemRepository.save(item);
-        }
-
-        // Save initial order status
-        OrderStatus initialStatus = new OrderStatus();
-        initialStatus.setOrder(savedOrder);
-        initialStatus.setStatus("CREATED");
-        initialStatus.setStatusDate(LocalDateTime.now());
-        orderStatusRepository.save(initialStatus);
-
-        return savedOrder;
+        return orderRepository.save(order);
     }
 
-    @Override
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
-    }
+	@Override
+	public List<Order> getAllOrders() {
+		return orderRepository.findAll();
+	}
 
-    @Override
-    public Order getOrderById(Long id) {
-        return orderRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + id));
-    }
+	@Override
+	public Order getOrderById(Long id) {
+		return orderRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + id));
+	}
 
-    @Override
-    public Order updateOrder(Long id, Order updatedOrder) {
-        Order existingOrder = getOrderById(id);
-        existingOrder.setOrderDate(updatedOrder.getOrderDate());
-        existingOrder.setOrderItems(updatedOrder.getOrderItems());
-        existingOrder.setStatus(updatedOrder.getStatus());
-        return orderRepository.save(existingOrder);
-    }
+	@Override
+	public Order updateOrder(Long id, Order updatedOrder) {
+		Order existingOrder = getOrderById(id);
+		existingOrder.setOrderDate(updatedOrder.getOrderDate());
+		existingOrder.setOrderItems(updatedOrder.getOrderItems());
+		existingOrder.setStatus(updatedOrder.getStatus());
+		return orderRepository.save(existingOrder);
+	}
 
-    @Override
-    public void deleteOrder(Long id) {
-        Order order = getOrderById(id);
-        orderRepository.delete(order);
-    }
+	@Override
+	public void deleteOrder(Long id) {
+		Order order = getOrderById(id);
+		orderRepository.delete(order);
+	}
+
+	@Override
+	public List<Order> getOrdersByUsername(String username) {
+		return orderRepository.findByUsername(username);
+	}
 }
