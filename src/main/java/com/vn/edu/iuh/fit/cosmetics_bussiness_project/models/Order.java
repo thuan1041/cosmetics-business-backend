@@ -84,7 +84,6 @@ package com.vn.edu.iuh.fit.cosmetics_bussiness_project.models;
 //	}
 //	
 //}
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -151,4 +150,28 @@ public class Order {
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
+
+	public Order(User user, List<OrderItem> orderItems, Date orderDate) {
+		super();
+		this.user = user;
+		this.orderItems = orderItems;
+		this.orderDate = orderDate;
+	}
+
+	public Order(Date orderDate) {
+		super();
+		this.orderDate = orderDate;
+	}
+
+	public Order() {
+		super();
+	}
+
+	public Order(User user, List<OrderItem> orderItems, Date orderDate, OrderStatus status) {
+		super();
+		this.user = user;
+		this.orderItems = orderItems;
+		this.orderDate = orderDate;
+		this.status = status;
+	}
 }

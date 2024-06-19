@@ -70,6 +70,7 @@ import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.ApiResponse;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.Order;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.OrderItem;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.OrderRequest;
+import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.OrderResponse;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.OrderStatus;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.User;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.repositories.OrderRepository;
@@ -145,7 +146,6 @@ public class OrderController {
 //        return ResponseEntity.ok(createdOrder);
 //    }
 	
-	@PostMapping
 	public ResponseEntity<Order> createOrder(@RequestBody Order order) {
 	    Long userId = order.getUser().getId();
 	    User user = userService.findById(userId);
@@ -156,7 +156,17 @@ public class OrderController {
 	    Order createdOrder = orderService.createOrder(order);
 	    return ResponseEntity.ok(createdOrder);
 	}
-
+	
+	@PostMapping("/")
+	public ResponseEntity<OrderResponse> createNewOrder(@RequestBody OrderRequest orderRequest){
+		Long userId = orderRequest.getUserId();
+		User user = userService.findById(userId);
+		if(user == null) {
+			return ResponseEntity.badRequest().body(null);
+		}
+		OrderResponse createOrder = orderService.createNewOrder(orderRequest);
+		return ResponseEntity.ok(createOrder);
+	}
 
 	
 

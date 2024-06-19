@@ -2,6 +2,7 @@ package com.vn.edu.iuh.fit.cosmetics_bussiness_project.models;
 
 public class OrderItemRequest {
     private Long productId;
+    private String productName;
     private int quantity;
     private double price;
 
@@ -29,4 +30,24 @@ public class OrderItemRequest {
     public void setPrice(double price) {
         this.price = price;
     }
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public OrderItemRequest() {
+		super();
+	}
+
+	public OrderItemRequest(Long productId, int quantity, double price) {
+		super();
+		this.productId = productId;
+		this.quantity = quantity;
+		this.price = price;
+	}
+    
 }

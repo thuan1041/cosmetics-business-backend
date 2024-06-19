@@ -1,12 +1,13 @@
 package com.vn.edu.iuh.fit.cosmetics_bussiness_project.models;
 
+import java.util.Date;
 import java.util.List;
 
 public class OrderRequest {
     private Long userId;
-    private List<OrderItemRequest> orderItems;
+    private List<OrderItem> orderItems;
     private Long statusId;
-    private String orderDate;
+    private Date orderDate;;
 
     // Getters and Setters
     public Long getUserId() {
@@ -17,11 +18,11 @@ public class OrderRequest {
         this.userId = userId;
     }
 
-    public List<OrderItemRequest> getOrderItems() {
+    public List<OrderItem> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<OrderItemRequest> orderItems) {
+    public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
 
@@ -33,11 +34,11 @@ public class OrderRequest {
         this.statusId = statusId;
     }
 
-    public String getOrderDate() {
+    public Date getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(String orderDate) {
+    public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
 }

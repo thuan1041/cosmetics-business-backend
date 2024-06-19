@@ -77,5 +77,44 @@ public class OrderItem {
 		this.price = price;
 	}
 
+	public OrderItem() {
+		super();
+	}
 
+	public OrderItem(Order order, String productName, int quantity, double price, Product product) {
+		super();
+		this.order = order;
+		this.productName = productName;
+		this.quantity = quantity;
+		this.price = price;
+		this.product = product;
+	}
+
+	public OrderItem(Order order, String productName, int quantity) {
+		super();
+		this.order = order;
+		this.productName = productName;
+		this.quantity = quantity;
+	}
+
+	public OrderItem(String productName, int quantity, double price) {
+		super();
+		this.productName = productName;
+		this.quantity = quantity;
+		this.price = price;
+	}
+
+	public OrderItem(int quantity, double price, Product product) {
+		super();
+		this.quantity = quantity;
+		this.price = price;
+		this.product = product;
+	}
+
+	public OrderItem(Long id, int quantity, double price) {
+		super();
+		this.id = id;
+		this.quantity = quantity;
+		this.price = price;
+	}
 }

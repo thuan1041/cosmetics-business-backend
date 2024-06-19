@@ -84,6 +84,19 @@ public class OrderStatus {
 	public OrderStatus() {
 		super();
 	}
+
+	public OrderStatus(String status, Date statusDate, Order order) {
+		super();
+		this.status = status;
+		this.statusDate = statusDate;
+		this.order = order;
+	}
+
+	public OrderStatus(String status, Date statusDate) {
+		super();
+		this.status = status;
+		this.statusDate = statusDate;
+	}
     
     // getters and setters
 }
