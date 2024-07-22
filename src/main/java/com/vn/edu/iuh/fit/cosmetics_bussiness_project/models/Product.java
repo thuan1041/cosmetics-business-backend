@@ -139,7 +139,7 @@ public class Product {
     private String name;
 
     @Column(nullable = false)
-    private BigDecimal price;
+    private double price;
 
     // Các trường khác nếu có
 
@@ -160,11 +160,32 @@ public class Product {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(double price) {
         this.price = price;
     }
+
+	public Product(Long id, String name, double price) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.price = price;
+	}
+
+	public Product(double price) {
+		super();
+		this.price = price;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [name=" + name + ", price=" + price + "]";
+	}
+
+	public Product() {
+		super();
+	}
 }

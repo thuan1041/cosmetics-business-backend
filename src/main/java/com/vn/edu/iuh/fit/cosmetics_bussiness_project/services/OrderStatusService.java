@@ -7,29 +7,42 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+//public class OrderStatusService {
+
+//    private final OrderStatusRepository orderStatusRepository;
+//
+//    @Autowired
+//    public OrderStatusService(OrderStatusRepository orderStatusRepository) {
+//        this.orderStatusRepository = orderStatusRepository;
+//    }
+//
+//    public List<OrderStatus> getAllOrderStatuses() {
+//        return orderStatusRepository.findAll();
+//    }
+//
+//    public OrderStatus getOrderStatusById(Long id) {
+//        return orderStatusRepository.findById(id).orElse(null);
+//    }
+//
+//    public OrderStatus saveOrderStatus(OrderStatus orderStatus) {
+//        return orderStatusRepository.save(orderStatus);
+//    }
+//
+//    public void deleteOrderStatus(Long id) {
+//        orderStatusRepository.deleteById(id);
+//    }
+
+
 @Service
-public class OrderStatusService {
+public interface OrderStatusService {
 
-    private final OrderStatusRepository orderStatusRepository;
+	List<OrderStatus> getAllOrderStatuses();
 
-    @Autowired
-    public OrderStatusService(OrderStatusRepository orderStatusRepository) {
-        this.orderStatusRepository = orderStatusRepository;
-    }
+	OrderStatus getOrderStatusById(Long id);
 
-    public List<OrderStatus> getAllOrderStatuses() {
-        return orderStatusRepository.findAll();
-    }
+	OrderStatus saveOrderStatus(OrderStatus orderStatus);
 
-    public OrderStatus getOrderStatusById(Long id) {
-        return orderStatusRepository.findById(id).orElse(null);
-    }
-
-    public OrderStatus saveOrderStatus(OrderStatus orderStatus) {
-        return orderStatusRepository.save(orderStatus);
-    }
-
-    public void deleteOrderStatus(Long id) {
-        orderStatusRepository.deleteById(id);
-    }
+	OrderStatus updateById(Long id, OrderStatus orderStatus);
 }
+
+//}

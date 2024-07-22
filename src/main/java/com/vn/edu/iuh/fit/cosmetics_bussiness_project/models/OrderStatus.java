@@ -3,6 +3,8 @@ package com.vn.edu.iuh.fit.cosmetics_bussiness_project.models;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,11 +44,19 @@ public class OrderStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String status;
+    public OrderStatus(String status, Date statusDate, Order order) {
+		super();
+		this.status = status;
+		this.statusDate = statusDate;
+		this.order = order;
+	}
+
+	private String status;
     private Date statusDate;
     
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnoreProperties("status")
     private Order order;
 
 	public Long getId() {
@@ -83,13 +93,6 @@ public class OrderStatus {
 
 	public OrderStatus() {
 		super();
-	}
-
-	public OrderStatus(String status, Date statusDate, Order order) {
-		super();
-		this.status = status;
-		this.statusDate = statusDate;
-		this.order = order;
 	}
 
 	public OrderStatus(String status, Date statusDate) {

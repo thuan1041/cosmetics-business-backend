@@ -6,26 +6,40 @@ import lombok.Data;
 @Data
 public class OrderItemDTO {
     private Long id;
-    private ProductDTO product;
+    private String productName;
     private int quantity;
-    
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public ProductDTO getProduct() {
-		return product;
-	}
-	public void setProduct(ProductDTO productDTO) {
-		this.product = productDTO;
-	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-    
+    private double price;
+
+    // Getters và Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }

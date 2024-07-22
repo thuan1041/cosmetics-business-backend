@@ -1,5 +1,7 @@
 package com.vn.edu.iuh.fit.cosmetics_bussiness_project.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,6 +16,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnoreProperties("orderItems")
     private Order order;
 
     @Column(name = "product_name")
@@ -117,4 +120,13 @@ public class OrderItem {
 		this.quantity = quantity;
 		this.price = price;
 	}
+
+	public OrderItem(Order order, String productName, int quantity, double price) {
+		super();
+		this.order = order;
+		this.productName = productName;
+		this.quantity = quantity;
+		this.price = price;
+	}
+
 }

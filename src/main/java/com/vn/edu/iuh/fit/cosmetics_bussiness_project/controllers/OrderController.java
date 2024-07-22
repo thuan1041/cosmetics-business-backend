@@ -92,11 +92,13 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-	
-	@Autowired OrderStatusRepository orderStatusRepository;
-	@Autowired OrderRepository orderRepository;
-    @Autowired
-    private UserService userService;
+
+	@Autowired
+	OrderStatusRepository orderStatusRepository;
+	@Autowired
+	OrderRepository orderRepository;
+	@Autowired
+	private UserService userService;
 
 	@GetMapping
 	public ResponseEntity<ApiResponse<List<Order>>> getAllOrders() {
@@ -145,43 +147,59 @@ public class OrderController {
 //        Order createdOrder = orderService.createOrder(order);
 //        return ResponseEntity.ok(createdOrder);
 //    }
-	
+
 	public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-	    Long userId = order.getUser().getId();
-	    User user = userService.findById(userId);
-	    if (user == null) {
-	        return ResponseEntity.badRequest().body(null);
-	    }
-	    order.setUser(user);
-	    Order createdOrder = orderService.createOrder(order);
-	    return ResponseEntity.ok(createdOrder);
-	}
-	
-	@PostMapping("/")
-	public ResponseEntity<OrderResponse> createNewOrder(@RequestBody OrderRequest orderRequest){
-		Long userId = orderRequest.getUserId();
+		Long userId = order.getUser().getId();
 		User user = userService.findById(userId);
-		if(user == null) {
+		if (user == null) {
 			return ResponseEntity.badRequest().body(null);
 		}
-		OrderResponse createOrder = orderService.createNewOrder(orderRequest);
-		return ResponseEntity.ok(createOrder);
+		order.setUser(user);
+		Order createdOrder = orderService.createOrder(order);
+		return ResponseEntity.ok(createdOrder);
 	}
 
-	
+	@PostMapping("/")
+	public ResponseEntity<ApiResponse<OrderResponse>> createNewOrder(@RequestBody OrderRequest orderRequest) {
+		Long userId = orderRequest.getUserId();
+		User user = userService.findById(userId);
+		if (user == null) {
+			return ResponseEntity.badRequest().body(null);
+		}
+		OrderResponse orderRepository = orderService.createNewOrder(orderRequest);
+		if (user != null) {
+			ApiResponse<OrderResponse> response = new ApiResponse<>(HttpStatus.OK.value(), "Order created successfully",
+					orderRepository);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else {
+			ApiResponse<OrderResponse> response = new ApiResponse<>(HttpStatus.NOT_FOUND.value(), "User is null", null);
+			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+		}
+	}
+
+//	@PostMapping("/")
+//	public ResponseEntity<OrderResponse> createNewOrder(@RequestBody OrderRequest orderRequest){
+//		Long userId = orderRequest.getUserId();
+//		User user = userService.findById(userId);
+//		if(user == null) {
+//			return ResponseEntity.badRequest().body(null);
+//		}
+//		OrderResponse createOrder = orderService.createNewOrder(orderRequest);
+//		return ResponseEntity.ok(createOrder);
+//	}
 
 	public OrderDTO convertToDTO(Order order) {
-	    OrderDTO orderDTO = new OrderDTO();
-	    orderDTO.setId(order.getId());
-	    orderDTO.setOrderDate(order.getOrderDate());
-	    
-	    if(order.getStatus() != null) {
-	    	orderDTO.setId(order.getId());
-	    } else {
-	    	orderDTO.setId(null);
-	    }
-	    return orderDTO;
-	    
+		OrderDTO orderDTO = new OrderDTO();
+		orderDTO.setId(order.getId());
+		orderDTO.setOrderDate(order.getOrderDate());
+
+		if (order.getStatus() != null) {
+			orderDTO.setId(order.getId());
+		} else {
+			orderDTO.setId(null);
+		}
+		return orderDTO;
+
 //	    UserDTO userDTO = new UserDTO();
 //	    userDTO.setId(order.getUser().getId());
 //	    userDTO.setUsername(order.getUser().getUsername());
@@ -213,33 +231,41 @@ public class OrderController {
 //	    return orderDTO;
 	}
 
-
 	public ResponseEntity<?> createOrder(@RequestBody OrderRequest orderRequest) {
-	    // Your existing code to create order
-	    Order order = new Order();
-	    // Set order status
-	    OrderStatus status = orderStatusRepository.findById(orderRequest.getStatusId())
-	            .orElseThrow(() -> new ResourceNotFoundException("OrderStatus not found"));
-	    order.setStatus(status);
-	    // Save order
-	    orderRepository.save(order);
-	    // Convert to DTO
-	    OrderDTO orderDTO = convertToDTO(order);
-	    return ResponseEntity.ok(orderDTO);
+		// Your existing code to create order
+		Order order = new Order();
+		// Set order status
+		OrderStatus status = orderStatusRepository.findById(orderRequest.getStatusId())
+				.orElseThrow(() -> new ResourceNotFoundException("OrderStatus not found"));
+		order.setStatus(status);
+		// Save order
+		orderRepository.save(order);
+		// Convert to DTO
+		OrderDTO orderDTO = convertToDTO(order);
+		return ResponseEntity.ok(orderDTO);
 	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity<ApiResponse<Order>> updateOrder(@PathVariable("id") Long id, @RequestBody Order order) {
-		Order updatedOrder = orderService.updateOrder(id, order);
-		if (updatedOrder != null) {
-			ApiResponse<Order> response = new ApiResponse<>(HttpStatus.OK.value(), "Order updated successfully",
-					updatedOrder);
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		} else {
-			ApiResponse<Order> response = new ApiResponse<>(HttpStatus.NOT_FOUND.value(), "Order not found", null);
-			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-		}
-	}
+
+//	@PutMapping("/{id}")
+//	public ResponseEntity<ApiResponse<OrderResponse>> updateOrder(@PathVariable("id") Long id, @RequestBody OrderRequest order) {
+//		OrderResponse updatedOrder = orderService.updateOrder(id, order);
+//		if (updatedOrder != null) {
+//			ApiResponse<OrderResponse> response = new ApiResponse<>(HttpStatus.OK.value(), "Order updated successfully",
+//					updatedOrder);
+//			return new ResponseEntity<>(response, HttpStatus.OK);
+//		} else {
+//			ApiResponse<OrderResponse> response = new ApiResponse<>(HttpStatus.NOT_FOUND.value(), "Order not found", null);
+//			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+//		}
+//	}
+    @PutMapping("/{id}")
+    public ResponseEntity<Order> updateOrder(@PathVariable("id") Long id, @RequestBody OrderResponse orderResponse) {
+        Order updatedOrder = orderService.updateOrder(id, orderResponse);
+        if (updatedOrder != null) {
+            return ResponseEntity.ok(updatedOrder);
+        }
+        return ResponseEntity.notFound().build();
+    }
+    
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteOrder(@PathVariable("id") Long id) {

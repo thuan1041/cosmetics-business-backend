@@ -1,4 +1,5 @@
 package com.vn.edu.iuh.fit.cosmetics_bussiness_project.models;
+
 //
 //import java.time.LocalDateTime;
 //import java.util.ArrayList;
@@ -88,68 +89,76 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.vn.edu.iuh.fit.cosmetics_bussiness_project.repositories.OrderStatusRepository;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Table(name = "orders")
 public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> orderItems = new ArrayList<>();
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnoreProperties("order")
+	private List<OrderItem> orderItems = new ArrayList<>();
 
-    private Date orderDate;
+	private Date orderDate;
 
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private OrderStatus status;
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnoreProperties("order")
+	private OrderStatus status;
 
-    // Getters và Setters
-    public Long getId() {
-        return id;
-    }
+	// Getters và Setters
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
 
-    public Date getOrderDate() {
-        return orderDate;
-    }
+	public Date getOrderDate() {
+		return orderDate;
+	}
 
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
 
-    public OrderStatus getStatus() {
-        return status;
-    }
+	public OrderStatus getStatus() {
+		return status;
+	}
 
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
+	public void setStatus(OrderStatus status) {
+		this.status = status;
+	}
 
 	public Order(User user, List<OrderItem> orderItems, Date orderDate) {
 		super();
@@ -174,4 +183,27 @@ public class Order {
 		this.orderDate = orderDate;
 		this.status = status;
 	}
+
+//	public void updateFromOrderResponse(OrderResponse orderResponse) {
+//		// Cập nhật thông tin User
+//		this.setUser(orderResponse.getUserProfile().getUser());
+//
+//		// Cập nhật danh sách OrderItem
+//		List<OrderItem> updatedOrderItems = new ArrayList<>();
+//		for (OrderItem orderItem : orderResponse.getOrderItems()) {
+//			orderItem.setOrder(this); // Đặt lại Order cho mỗi OrderItem
+//			updatedOrderItems.add(orderItem);
+//		}
+//		this.setOrderItems(updatedOrderItems);
+//
+//		// Cập nhật OrderDate
+//		this.setOrderDate(orderResponse.getOrderDate());
+//
+//		// Cập nhật OrderStatus
+//		OrderStatus newStatus = orderResponse.getOrderStatus();
+//		if (newStatus != null) {
+//			newStatus.setOrder(this); // Đặt lại Order cho OrderStatus
+//			this.setStatus(newStatus);
+//		}
+//	}
 }

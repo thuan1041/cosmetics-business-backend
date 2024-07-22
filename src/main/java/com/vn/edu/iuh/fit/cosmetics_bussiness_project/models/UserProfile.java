@@ -20,5 +20,54 @@ public class UserProfile {
     @Column(name = "address")
     private String address;
 
+	public UserProfile(User user, String fullName, String address) {
+		super();
+		this.user = user;
+		this.fullName = fullName;
+		this.address = address;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public UserProfile() {
+		super();
+	}
+
+	public UserProfile(String fullName, String address) {
+		super();
+		this.fullName = fullName;
+		this.address = address;
+	}
+
     // Getters and setters
 }
