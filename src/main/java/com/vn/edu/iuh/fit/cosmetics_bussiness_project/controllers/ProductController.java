@@ -77,4 +77,10 @@ public class ProductController {
 		ApiResponse<List<Product>> response = new ApiResponse<>(0, "Products retrieved successfully", products);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	@GetMapping("/getListProduct")
+	public  ResponseEntity<ApiResponse<List<Product>>> getProductPagation(@RequestParam int page, @RequestParam int limit){
+		List<Product> products = productService.getProductPagation(page, limit);
+		ApiResponse<List<Product>> response = new ApiResponse<>(0, "succes",products);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 }

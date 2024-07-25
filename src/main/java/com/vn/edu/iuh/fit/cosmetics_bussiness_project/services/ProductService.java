@@ -10,4 +10,5 @@ public interface ProductService {
     void deleteProduct(Long id);
     Product getProductById(Long id);
     List<Product> getAllProducts();
+    List<Product> getProductPagation(int page,int limit);
 }
