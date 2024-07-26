@@ -3,10 +3,13 @@ package com.vn.edu.iuh.fit.cosmetics_bussiness_project.controllers;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.exceptions.ResourceNotFoundException;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.ApiResponse;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.User;
+import com.vn.edu.iuh.fit.cosmetics_bussiness_project.repositories.UserRepository;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +22,7 @@ public class UserController {
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
-
+    
 	@PostMapping("register")
 	public ResponseEntity<ApiResponse<User>> registerUser(@RequestBody User user) {
 		ApiResponse<User> response;

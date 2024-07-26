@@ -12,7 +12,7 @@ import java.util.List;
 public interface ShoppingCartItemRepository extends JpaRepository<ShoppingCartItem, Long> {
 //
 //    List<ShoppingCartItem> findByUserUsername(String username);
-//    List<ShoppingCartItem> findByUser(User user);
+    List<ShoppingCartItem> findByUser(User user);
     List<ShoppingCartItem> findByUserId(Long userId);
 
 }

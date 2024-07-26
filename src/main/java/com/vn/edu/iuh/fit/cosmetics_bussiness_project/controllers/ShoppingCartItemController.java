@@ -1,5 +1,6 @@
 package com.vn.edu.iuh.fit.cosmetics_bussiness_project.controllers;
 
+import com.vn.edu.iuh.fit.cosmetics_bussiness_project.dto.ShoppingCartItemRequest;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.ApiResponse;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.models.ShoppingCartItem;
 import com.vn.edu.iuh.fit.cosmetics_bussiness_project.services.ShoppingCartItemService;
@@ -123,10 +124,14 @@ public class ShoppingCartItemController {
         );
         return ResponseEntity.ok(response);
     }
-    @PostMapping
-    public ResponseEntity<ApiResponse<ShoppingCartItem>> createShoppingCartItem(@RequestBody ShoppingCartItem shoppingCartItem) {
-        ShoppingCartItem createdShoppingCartItem = shoppingCartItemService.createShoppingCartItem(shoppingCartItem);
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse<ShoppingCartItem>> createShoppingCartItem(@RequestBody ShoppingCartItemRequest shoppingCartRequest) {
+        ShoppingCartItem createdShoppingCartItem = shoppingCartItemService.createShoppingCartItem(
+        		shoppingCartRequest.getQuantity(), 
+        		shoppingCartRequest.getUserId(), 
+        		shoppingCartRequest.getProductId());
         ApiResponse<ShoppingCartItem> response = new ApiResponse<>(HttpStatus.CREATED.value(), "ShoppingCartItem created successfully", createdShoppingCartItem);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+    
 }
